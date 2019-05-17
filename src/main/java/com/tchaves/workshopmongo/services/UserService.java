@@ -30,14 +30,26 @@ public class UserService {
 	public User insert(User obj) {
 		return repo.insert(obj);
 	}
-	
+
 	public void delete(String id) {
 		findById(id);
 		repo.deleteById(id);
 	}
-	
 
-	// É melhor pratica criar este metodo aqui(Ao inves da classe UserDTO) devido esta classe ja possuir
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+		
+	}
+
+	// É melhor pratica criar este metodo aqui(Ao inves da classe UserDTO) devido
+	// esta classe ja possuir
 	// dependencia com o BD, para caso precisemos usar o metodo com consulta ao
 	// mesmo
 	public User fromDTO(UserDTO objDto) {
